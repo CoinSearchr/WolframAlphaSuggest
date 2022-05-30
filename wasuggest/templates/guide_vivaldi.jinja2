@@ -1,0 +1,35 @@
+{% extends 'base.jinja2' %}
+
+{% block title %} Guide: Add to Vivaldi {% endblock %}
+
+{% block content %}
+	<section class="py-3 container">
+		<div class="row py-lg-5">
+			<div class="col-lg-8 col-md-12 mx-auto">
+				<h1 class="fw-light text-center">Add {{ site_config['name'] }} to Vivaldi Browser</h1>
+				<p class="lead text-muted text-center">Easily see WolframAlpha results from within Vivaldi's address bar.</p>
+
+				<div class="text-left">
+
+{% filter markdown %}
+1. **Add to Vivaldi**
+    1. Click the Gear in the bottom-left corner.
+    2. Go to "Search".
+    3. Click the "+" button in "Search Engines" to add a new Search Engine.
+    4. Fill out the following properties:
+        * **Name:** `{{ site_config['name'] }}`
+        * **Nickname:** `wa`
+        * **URL:** `https://{{ site_config['hostname'] }}/search?q=%s`
+        * **Suggest URL:** `https://{{ site_config['hostname'] }}/suggest?q=%s`
+    5. In the "Allow Search Suggestions" section, check all three boxes ("In Address Field", "Only when Using Search Engine Nickname", and "In Search Field").
+2. **Search:** To search using {{ site_config['name'] }}, go to the address bar, and type "wa", followed by your search term. For example, type "wa distance from LA to Boston" into the address bar.
+4. **Get Suggestions:** As you type, the results will appear. Select any suggestion to view more details/search that option's results on WolframAlpha.
+
+{% endfilter %}
+				</div>
+
+
+			</div>
+		</div>
+	</section>
+{% endblock %}

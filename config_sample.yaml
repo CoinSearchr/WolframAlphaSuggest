@@ -1,0 +1,19 @@
+# Duplicate this file into ./config.yaml
+
+database:
+  db_path: /home/main/wasuggest_db.sqlite
+  db_type: sqlite3
+  
+
+site:
+  hostname: wasuggest.coinsearchr.com
+  name: WolframAlphaSuggest
+  tor_hidden_service_hostname: does_not_exist.onion
+
+wolframalpha:
+  api_keys_list:
+    - api_key_1
+    - api_key_2
+  
+  cache_timeout_sec: 600
+  

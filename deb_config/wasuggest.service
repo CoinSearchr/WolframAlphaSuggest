@@ -1,0 +1,15 @@
+[Unit]
+Description=Gunicorn for wasuggest
+After=network.target
+
+[Service]
+User=main
+Group=www-data
+WorkingDirectory=/home/main/WolframAlphaSuggest
+Environment="PATH=/home/main/WolframAlphaSuggest/venv/bin"
+ExecStart=/home/main/WolframAlphaSuggest/venv/bin/gunicorn --workers 2 --timeout 600 --bind unix:wasuggest.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
+
+

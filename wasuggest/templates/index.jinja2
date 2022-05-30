@@ -1,0 +1,71 @@
+{% extends 'base.jinja2' %}
+{% set active_page = 'index' -%}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">{{ site_config['name'] }} - immediate search results for WolframAlpha</h1>
+				<p class="lead text-muted">Start searching today.</p>
+
+				<!--
+				<form method="GET" action="/search">
+					<div class="input-group mb-3">
+						<input type="text" name="q" class="form-control" placeholder="Bitcoin, LTC, ..." aria-label="Enter cryptocurrency name to search" autofocus>
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="submit">Search</button>
+						</div>
+					</div>
+				</form>
+				-->
+
+				{#
+				<p>
+					<a href="/convert" class="btn btn-secondary my-2">Go to Quick Converter</a>
+				</p>
+				#}
+
+				<div class="card mt-5">
+					<div class="card-body">
+						<h5 class="card-title text-center">
+							Get the most out of {{ site_config['name'] }}. Add it to your browser.
+						</h5>
+						<hr>
+						<p class="card-text text-start">Modern browsers support multiple search engines, and allow for easy toggling between them.</p>
+						<p class="card-text text-start">Select your browser to see how to add {{ site_config['name'] }} as a search engine (no extensions required) to easily see WolframAlpha search results.</p>
+						
+						<div class="d-flex justify-content-between align-items-center">
+							<div class="btn-group">
+								<a role="button" href="/guide/firefox" class="btn btn-sm btn-outline-primary">Guide: Add to Firefox</a>
+								<a role="button" href="/guide/vivaldi" class="btn btn-sm btn-outline-primary">Guide: Add to Vivaldi</a>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card mt-5">
+					<div class="card-body">
+						<h5 class="card-title text-center">
+							Features
+						</h5>
+						<hr>
+						<p class="card-text text-start">
+							<ul class="text-start">
+								<li>Supports the OpenSearch protocol to get search results natively in your browser.</li>
+								<li><a href="https://github.com/CoinSearchr/WolframAlphaSuggest" target="_blank" class="">Open source</a> and actively developed. Responsive to GitHub issues.</li>
+								
+								<!--<li><a href="http://{{ site_config['tor_hidden_service_hostname'] }}/">Tor Hidden Service</a> site available for privacy-conscious users.</li>-->
+							
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
