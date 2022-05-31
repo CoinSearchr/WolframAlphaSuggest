@@ -9,6 +9,7 @@ site:
   hostname: wasuggest.coinsearchr.com
   name: WolframAlphaSuggest
   tor_hidden_service_hostname: does_not_exist.onion
+  github_link: https://github.com/CoinSearchr/WolframAlphaSuggest
 
 wolframalpha:
   api_keys_list:

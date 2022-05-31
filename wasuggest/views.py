@@ -9,6 +9,8 @@ import re
 import os
 import pandas as pd
 import logging
+import random
+import urllib.parse
 
 logger = logging.getLogger(__name__)
 
@@ -18,14 +20,37 @@ site_config = db.config['site']
 def wa_simple_lookup(search_term: str) -> str:
 	api_key = random.choice(db.config['wolframalpha']['api_keys_list'])
 
-	url = f'https://api.wolframalpha.com/v1/result?appid={api_key}&i={search_term}'
-	logger.info(f"Making request to: {url}") # TODO confirm that search_term is URL-encoded already
+	url = f'https://api.wolframalpha.com/v1/result?appid={api_key}&i={urllib.parse.quote_plus(search_term)}'
+	logger.info(f"Making request to: {url}")
 
 	try:
 		return common.call_url_max5sec(url).text
 	except Exception as e:
 		logger.info(f"Error calling WolframAlpha API: {e}")
 		return '???'
+
+
+@app.template_filter('pluralize')
+def pluralize(number, singular = '', plural = 's'):
+	if number == 1:
+		return singular
+	else:
+		return plural
+
+
+@app.context_processor
+def inject_global_vars():
+	""" These variables will be available in all templates. """
+	return {
+		'now': datetime.datetime.utcnow(), # access with {{ now.year }}
+		
+		'site_config': site_config,
+	}
+
+@app.route('/')
+@cache.cached(timeout=3600*24)
+def index():
+	return render_template("index.jinja2")
 
 
 @app.route('/search', methods=['GET']) # args: q=search_term
@@ -40,7 +65,7 @@ def search():
 		arg_search_term = arg_search_term.split(' => ')[0].strip()
 
 	# redirect
-	return redirect('https://www.wolframalpha.com/input/?i=' + arg_search_term, 302)
+	return redirect('https://www.wolframalpha.com/input/?i=' + urllib.parse.quote_plus(arg_search_term), 302)
 
 
 
@@ -82,18 +107,18 @@ def suggest():
 @app.route('/contact')
 @cache.cached(timeout=3600*24)
 def contact():
-	return render_template("contact.jinja2", site_config=site_config)
+	return render_template("contact.jinja2")
 
 
 @app.route('/guide/firefox')
 @cache.cached(timeout=3600*24)
 def guide_firefox():
-	return render_template("guide_firefox.jinja2", site_config=site_config)
+	return render_template("guide_firefox.jinja2")
 
 @app.route('/guide/vivaldi')
 @cache.cached(timeout=3600*24)
 def guide_vivaldi():
-	return render_template("guide_vivaldi.jinja2", site_config=site_config)
+	return render_template("guide_vivaldi.jinja2")
 
 
 @app.route('/favicon.ico')
@@ -111,4 +136,4 @@ def robots_txt():
 @app.route('/privacy-policy')
 @cache.cached(timeout=3600*24)
 def privacypolicy():
-	return render_template("privacypolicy.jinja2", site_config=site_config)
+	return render_template("privacypolicy.jinja2")
