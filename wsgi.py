@@ -1,4 +1,4 @@
-from coinsearchr import app
+from wasuggest import app
 
 if __name__ == "__main__":
     app.run()
