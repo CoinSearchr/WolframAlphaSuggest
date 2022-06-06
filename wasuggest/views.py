@@ -26,7 +26,7 @@ class cache_obj:
 
 	def add_result(self, result: str):
 		""" Add a result, ensuring that the list doesn't get too long. """
-		logger.info(f"add_result(), {result in self.results_history}")
+		
 		if result not in self.results_history:
 			self.ever_had_varying_results = True
 
@@ -78,17 +78,19 @@ class MyMemoize:
 
 @MyMemoize
 def wa_simple_lookup(search_term: str) -> str:
+	""" Perform WA API request on non-escaped string `search_term`, and return a non-escaped result. Use caching if appropriate. """
 	api_key = random.choice(db.config['wolframalpha']['api_keys_list'])
 
 	url = f'https://api.wolframalpha.com/v1/result?appid={api_key}&i={urllib.parse.quote_plus(search_term)}&timeout={db.config["wolframalpha"]["timeout_sec"]}'
 	logger.info(f"Making request to: {url}")
 
 	try:
-		return common.call_url_max5sec(url).text
+		return common.call_url_max5sec(url, timeout_sec=db.config["wolframalpha"]["timeout_sec"]+1.0).text
 	except Exception as e:
 		logger.info(f"Error calling WolframAlpha API: {e}")
 		return '???'
 
+logger.info(f"Doing test WA API call to init session. 'random int' -> '{wa_simple_lookup('random int')}'.")
 
 @app.template_filter('pluralize')
 def pluralize(number, singular = '', plural = 's'):
