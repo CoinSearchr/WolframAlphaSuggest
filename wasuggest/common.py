@@ -91,7 +91,7 @@ def wa_simple_lookup(search_term: str) -> str:
 	""" Perform WA API request on non-escaped string `search_term`, and return a non-escaped result. Use caching if appropriate. """
 	api_key = random.choice(db.config['wolframalpha']['api_keys_list'])
 
-	url = f'https://api.wolframalpha.com/v1/result?appid={api_key}&i={urllib.parse.quote_plus(search_term)}&timeout={db.config["wolframalpha"]["timeout_sec"]}'
+	url = f'https://api.wolframalpha.com/v1/result?appid={api_key}&i={urllib.parse.quote_plus(search_term)}&timeout={db.config["wolframalpha"]["timeout_sec"]}&units=metric'
 	logger.info(f"Making request to: {url}")
 
 	try:
