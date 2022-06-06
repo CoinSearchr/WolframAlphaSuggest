@@ -13,5 +13,9 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 def test():
 	return 'Hello World'
 
+# start tasks
+from . import bgtasks
+bgtasks.init_bg_tasks()
+
 # must go at bottom
 from . import views # not accessed, required
