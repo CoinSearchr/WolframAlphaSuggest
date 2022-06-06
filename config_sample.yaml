@@ -16,5 +16,5 @@ wolframalpha:
     - api_key_1
     - api_key_2
   
-  cache_timeout_sec: 600
+  timeout_sec: 2
   
